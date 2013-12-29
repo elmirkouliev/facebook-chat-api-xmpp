@@ -233,12 +233,15 @@ function xmpp_connect($options, $access_token) {
 	if (!find_xmpp($fp, 'JID')) {
 		
 		return false;
-	}
+	
+    }
 	
 	send_xml($fp, $SESSION_XML);
 	if (!find_xmpp($fp, 'SESSION')) {
-	return false;
-	}
+	
+        return false;
+	
+    }
 	
 	/* To send a message, use the following structure. The function declaration can be found at the top of the page.
 	
@@ -248,11 +251,11 @@ function xmpp_connect($options, $access_token) {
 		
 	*/		
 	
-	// we made it!
+	//Closes connection to socket
 	send_xml($fp, $CLOSE_XML);
-	print ("Authentication complete<br>");
-	fclose($fp);
-	
+    print ("Authentication complete<br>");
+    
+    fclose($fp);
 	
 	return true;
   
@@ -279,12 +282,12 @@ function connect() {
 	
    
 	if (xmpp_connect($options, $access_token)) 
-		
-		print "Done<br>";
+
+     print "Done<br>";
     
 	else 
 		
-		print "An error ocurred<br>";
+     print "An error ocurred<br>";
   	
 }
 
