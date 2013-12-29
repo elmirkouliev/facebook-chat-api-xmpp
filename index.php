@@ -1,3 +1,4 @@
+<!-- Elmir Kouliev ~ elmirkouliev.com -->
 <?php
 
 	require('xmpp.php');

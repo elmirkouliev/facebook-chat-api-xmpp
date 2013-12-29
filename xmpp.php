@@ -1,6 +1,6 @@
+<!-- Elmir Kouliev ~ elmirkouliev.com -->
 <?php
 
-	
 /************XMPP*************/
 
 // Copyright 2004-present Facebook. All Rights Reserved.
