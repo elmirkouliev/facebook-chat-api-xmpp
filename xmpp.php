@@ -25,23 +25,23 @@ $START_TLS = '<starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/>';
 
 function open_connection($server) {
   
-	print "[INFO] Opening connection... ";
-	
-	$fp = fsockopen($server, 5222, $errno, $errstr);
-	
-	if (!$fp) 
-		print "$errstr ($errno)<br>";
-		
-	else
-		print "connnection open<br>";
-  
-  return $fp;
+    print "[INFO] Opening connection... ";
+    
+    $fp = fsockopen($server, 5222, $errno, $errstr);
+    
+    if (!$fp) 
+        print "$errstr ($errno)<br>";
+        
+    else
+        print "connnection open<br>";
+      
+    return $fp;
 
 }
 
 function send_xml($fp, $xml) {
 
-  fwrite($fp, $xml);
+    fwrite($fp, $xml);
 
 }
 
@@ -59,39 +59,39 @@ function send_message($fp,$message,$sender,$receiver){
 
 function recv_xml($fp,  $size=4096) {
   
-  $xml = fread($fp, $size);
-
-  if (!preg_match('/^</', $xml)) {
-	   $xml = '<' . $xml;
-  }
- 
-  if ($xml === "") {
-	 return null;
-  }
-  
-  // parses xml
-  $xml_parser = xml_parser_create();
-  xml_parse_into_struct($xml_parser, $xml, $val, $index);
-  xml_parser_free($xml_parser);
-
-  return array($val, $index);
+    $xml = fread($fp, $size);
+    
+    if (!preg_match('/^</', $xml)) {
+       $xml = '<' . $xml;
+    }
+    
+    if ($xml === "") {
+     return null;
+    }
+    
+    // parses xml
+    $xml_parser = xml_parser_create();
+    xml_parse_into_struct($xml_parser, $xml, $val, $index);
+    xml_parser_free($xml_parser);
+    
+    return array($val, $index);
 
 }
 
 function find_xmpp($fp,  $tag, $value=null, &$ret=null) {
   
-  static $val = null, $index = null;
-
-  do {
+    static $val = null, $index = null;
+    
+    do {
     if ($val === null && $index === null) {
       list($val, $index) = recv_xml($fp);
       if ($val === null || $index === null) {
         return false;
       }
     }
-
+    
     foreach ($index as $tag_key => $tag_array) {
-
+    
       if ($tag_key === $tag) {
         if ($value === null) {
           if (isset($val[$tag_array[0]]['value'])) {
@@ -109,11 +109,11 @@ function find_xmpp($fp,  $tag, $value=null, &$ret=null) {
       }
     }
     $val = $index = null;
-  }
-  
-  while (!feof($fp));
-
-  return false;
+    }
+    
+    while (!feof($fp));
+    
+    return false;
   
 }
 
